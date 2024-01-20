@@ -1,6 +1,6 @@
 package halatiukyurii.pl.lotto.domaine.numberreceiver;
 
-import halatiukyurii.pl.lotto.domaine.numberreceiver.dto.InputNumbersResultDto;
+import halatiukyurii.pl.lotto.domaine.numberreceiver.dto.InputNumberResultDto;
 import halatiukyurii.pl.lotto.domaine.numberreceiver.dto.TicketDto;
 import lombok.AllArgsConstructor;
 
@@ -18,20 +18,20 @@ public class NumberReceiverFacade {
     private final NumberReceiverRepository repository;
     private final Clock clock;
 
-    public InputNumbersResultDto inputNumbers(Set<Integer> numbersFromUser) {
+    public InputNumberResultDto inputNumbers(Set<Integer> numbersFromUser) {
         boolean areAllNumbersInRange = validator.areAllNumbersInRange(numbersFromUser);
         if (areAllNumbersInRange) {
             String ticketId = UUID.randomUUID().toString();
             LocalDateTime drawDate = LocalDateTime.now(clock);
             Ticket savedTicket = repository.save(new Ticket(ticketId, drawDate, numbersFromUser));
-            return InputNumbersResultDto.builder()
+            return InputNumberResultDto.builder()
                     .drawDate(savedTicket.drawDate())
                     .ticketId(savedTicket.ticketId())
                     .numbersFromUser(numbersFromUser)
                     .message("success")
                     .build();
         }
-        return InputNumbersResultDto.builder()
+        return InputNumberResultDto.builder()
                 .message("failed")
                 .build();
     }
