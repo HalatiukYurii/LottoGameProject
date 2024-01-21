@@ -8,7 +8,6 @@ import java.util.Set;
 public record TicketDto(
         String hash,
         Set<Integer> numbers,
-        LocalDateTime drawDate,
-        String ticketId,
-        Set<Integer> numbersFromUser) {
+        LocalDateTime drawDate)
+         {
 }
