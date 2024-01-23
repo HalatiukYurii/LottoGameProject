@@ -13,6 +13,7 @@ class NumberValidator {
     private static final int MIN_VALUE_NUMBER_FROM_USER = 1;
 
     List<ValidationResult> errors = new LinkedList<>();
+
     List<ValidationResult> validate(Set<Integer> numbersFromUser) {
         if (!isNumbersSizeEqualSix(numbersFromUser)) {
             errors.add(ValidationResult.NOT_SIX_NUMBERS_GIVEN);
@@ -22,6 +23,7 @@ class NumberValidator {
         }
         return errors;
     }
+
     String createResultMessage() {
         return this.errors
                 .stream()
@@ -32,6 +34,7 @@ class NumberValidator {
     private boolean isNumbersSizeEqualSix(Set<Integer> numbersFromUser) {
         return numbersFromUser.size() == QUANTITY_OF_NUMBERS_FROM_USER;
     }
+
     boolean isNumberInRange(Set<Integer> numbersFromUser) {
         return numbersFromUser.stream()
                 .allMatch(number -> number >= MIN_VALUE_NUMBER_FROM_USER && number <=

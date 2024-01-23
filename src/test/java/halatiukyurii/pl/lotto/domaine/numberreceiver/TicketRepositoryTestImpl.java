@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class TicketRepositoryTestImpl implements TicketRepository {
 
-    private final Map<String,Ticket> tickets = new ConcurrentHashMap<>();
+    private final Map<String, Ticket> tickets = new ConcurrentHashMap<>();
 
 
     @Override
@@ -29,7 +29,7 @@ public class TicketRepositoryTestImpl implements TicketRepository {
 
     @Override
     public Ticket save(Ticket savedTicket) {
-       tickets.put(savedTicket.hash(),savedTicket);
+        tickets.put(savedTicket.hash(), savedTicket);
         return savedTicket;
     }
 }

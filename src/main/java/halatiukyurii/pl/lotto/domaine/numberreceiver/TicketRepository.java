@@ -8,5 +8,6 @@ public interface TicketRepository {
     Collection<Ticket> findAllTicketsByDrawDate(LocalDateTime drawDate);
 
     Ticket findByHash(String hash);
+
     Ticket save(Ticket savedTicket);
 }
