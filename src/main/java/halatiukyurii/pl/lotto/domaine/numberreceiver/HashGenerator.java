@@ -2,10 +2,10 @@ package halatiukyurii.pl.lotto.domaine.numberreceiver;
 
 import java.util.UUID;
 
-class HashGenerator implements HashGenerable{
+class HashGenerator implements HashGenerable {
 
-     @Override
-     public String getHash() {
-         return UUID.randomUUID().toString();
-     }
- }
+    @Override
+    public String getHash() {
+        return UUID.randomUUID().toString();
+    }
+}

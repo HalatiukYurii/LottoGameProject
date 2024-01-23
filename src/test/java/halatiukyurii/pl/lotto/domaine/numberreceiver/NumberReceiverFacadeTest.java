@@ -12,14 +12,15 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NumberReceiverFacadeTest {
-    private  final TicketRepository ticketRepository = new TicketRepositoryTestImpl();
+    private final TicketRepository ticketRepository = new TicketRepositoryTestImpl();
     Clock clock = Clock.systemUTC();
+
     @Test
-    public void it_should_return_correct_response_when_user_input_six_numbers_in_range(){
+    public void it_should_return_correct_response_when_user_input_six_numbers_in_range() {
         //given
         HashGenerable hashGenerator = new HashGeneratorTestImpl();
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
-        Set <Integer> numbersFromUser = Set.of(1,2,3,4,5,6);
+        Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6);
         DrawDateGenerator drawDateGenerator = new DrawDateGenerator(clock);
         LocalDateTime nextDrawDate = drawDateGenerator.getNextDrawDate();
         TicketDto generatedTicket = TicketDto.builder()
@@ -31,9 +32,11 @@ class NumberReceiverFacadeTest {
         NumberReceiverResponseDto response = numberReceiverFacade.inputNumbers(numbersFromUser);
         //then
         NumberReceiverResponseDto expectedResponse = new NumberReceiverResponseDto(generatedTicket, ValidationResult.INPUT_SUCCESS.info);
-        assertThat(response).isEqualTo(expectedResponse);    }
+        assertThat(response).isEqualTo(expectedResponse);
+    }
+
     @Test
-    public void it_should_return_failed_message_when_user_input_six_numbers_but_one_number_is_out_of_range(){
+    public void it_should_return_failed_message_when_user_input_six_numbers_but_one_number_is_out_of_range() {
 
         //given
         HashGenerator hashGenerator = new HashGenerator();
@@ -45,8 +48,9 @@ class NumberReceiverFacadeTest {
         NumberReceiverResponseDto expectedResponse = new NumberReceiverResponseDto(null, ValidationResult.NOT_IN_RANGE.info);
         assertThat(response).isEqualTo(expectedResponse);
     }
+
     @Test
-    public void it_should_return_failed_message_when_user_input_six_numbers_but_one_number_is_out_of_range_and_is_negative(){
+    public void it_should_return_failed_message_when_user_input_six_numbers_but_one_number_is_out_of_range_and_is_negative() {
         //given
         HashGenerator hashGenerator = new HashGenerator();
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
@@ -57,8 +61,9 @@ class NumberReceiverFacadeTest {
         NumberReceiverResponseDto expectedResponse = new NumberReceiverResponseDto(null, ValidationResult.NOT_IN_RANGE.info);
         assertThat(response).isEqualTo(expectedResponse);
     }
+
     @Test
-    public void it_should_return_failed_message_when_user_input_less_than_six_numbers(){
+    public void it_should_return_failed_message_when_user_input_less_than_six_numbers() {
         //given
         HashGenerator hashGenerator = new HashGenerator();
         NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
@@ -67,7 +72,9 @@ class NumberReceiverFacadeTest {
         NumberReceiverResponseDto response = numberReceiverFacade.inputNumbers(numbersFromUser);
         //then
         NumberReceiverResponseDto expectedResponse = new NumberReceiverResponseDto(null, ValidationResult.NOT_SIX_NUMBERS_GIVEN.info);
-        assertThat(response).isEqualTo(expectedResponse);    }
+        assertThat(response).isEqualTo(expectedResponse);
+    }
+
     @Test
     public void it_should_return_failed_message_when_user_input_more_than_six_numbers() {
         // given
@@ -82,6 +89,7 @@ class NumberReceiverFacadeTest {
         NumberReceiverResponseDto expectedResponse = new NumberReceiverResponseDto(null, ValidationResult.NOT_SIX_NUMBERS_GIVEN.info);
         assertThat(response).isEqualTo(expectedResponse);
     }
+
     @Test
     public void it_should_return_correct_hash() {
         // given
@@ -94,20 +102,22 @@ class NumberReceiverFacadeTest {
         assertThat(response).hasSize(36);
         assertThat(response).isNotNull();
     }
-        @Test
-    public void it_should_return_correct_draw_date(){
+
+    @Test
+    public void it_should_return_correct_draw_date() {
         //given
-            Clock clock = Clock.fixed(LocalDateTime.of(2022, 11, 19, 10, 0, 0).toInstant(ZoneOffset.UTC), ZoneId.of("Europe/London"));
-            HashGenerable hashGenerator = new HashGenerator();
-            NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
-            Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6);
+        Clock clock = Clock.fixed(LocalDateTime.of(2022, 11, 19, 10, 0, 0).toInstant(ZoneOffset.UTC), ZoneId.of("Europe/London"));
+        HashGenerable hashGenerator = new HashGenerator();
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
+        Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6);
         //when
-            LocalDateTime testedDrawDate = numberReceiverFacade.inputNumbers(numbersFromUser).ticketDto().drawDate();
+        LocalDateTime testedDrawDate = numberReceiverFacade.inputNumbers(numbersFromUser).ticketDto().drawDate();
         //then
-            LocalDateTime expectedDrawDate = LocalDateTime.of(2022, 11, 19, 12, 0, 0);
-            assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
+        LocalDateTime expectedDrawDate = LocalDateTime.of(2022, 11, 19, 12, 0, 0);
+        assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
 
     }
+
     @Test
     public void it_should_return_next_Saturday_draw_date_when_date_is_Saturday_noon() {
         // given
@@ -125,6 +135,7 @@ class NumberReceiverFacadeTest {
 
         assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
     }
+
     @Test
     public void it_should_return_next_Saturday_draw_date_when_date_is_Saturday_afternoon() {
         // given
@@ -142,6 +153,7 @@ class NumberReceiverFacadeTest {
 
         assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
     }
+
     @Test
     public void it_should_return_tickets_with_correct_draw_date() {
         // given
@@ -166,6 +178,7 @@ class NumberReceiverFacadeTest {
         // then
         assertThat(allTicketsByDate).containsOnly(ticketDto, ticketDto1);
     }
+
     @Test
     public void it_should_return_empty_collections_if_there_are_no_tickets() {
         // given
@@ -178,5 +191,20 @@ class NumberReceiverFacadeTest {
         List<TicketDto> allTicketsByDate = numberReceiverFacade.retrieveAllTicketsByNextDrawDate(drawDate);
         // then
         assertThat(allTicketsByDate).isEmpty();
+    }
+
+    @Test
+    public void it_should_return_next_draw_date() {
+        // given
+        Clock clock = Clock.fixed(LocalDateTime.of(2022, 11, 19, 10, 0, 0).toInstant(ZoneOffset.UTC), ZoneId.of("Europe/London"));
+        HashGenerable hashGenerator = new HashGenerator();
+        NumberReceiverFacade numberReceiverFacade = new NumberReceiverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
+
+        // when
+        LocalDateTime testedDrawDate = numberReceiverFacade.retrieveNextDrawDate();
+
+        // then
+        LocalDateTime expectedDrawDate = LocalDateTime.of(2022, 11, 19, 12, 0, 0);
+        assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
     }
 }
