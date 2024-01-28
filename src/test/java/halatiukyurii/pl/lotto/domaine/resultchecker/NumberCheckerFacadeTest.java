@@ -88,7 +88,7 @@ class NumberCheckerFacadeTest {
         PlayersDto playersDto = resultCheckerFacade.generateWinners();
         //then
         String message = playersDto.message();
-        assertThat(message).isEqualTo("Winners failed to retrieve");
+        assertThat(message).isEqualTo("Winning failed to retrieve");
 
     }
 
@@ -103,7 +103,7 @@ class NumberCheckerFacadeTest {
         PlayersDto playersDto = resultCheckerFacade.generateWinners();
         //then
         String message = playersDto.message();
-        assertThat(message).isEqualTo("Winners failed to retrieve");
+        assertThat(message).isEqualTo("Winning failed to retrieve");
 
     }
 
