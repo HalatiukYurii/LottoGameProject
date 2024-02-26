@@ -1,4 +1,4 @@
-package halatiukyurii.pl.lotto.domaine;
+package halatiukyurii.pl.lotto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
